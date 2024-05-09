@@ -5,12 +5,12 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
+static char *font = "dina:pixelsize=12:antialias=true:autohint=true";
 #if FONT2_PATCH
 /* Spare fonts */
 static char *font2[] = {
 /*	"Inconsolata for Powerline:pixelsize=12:antialias=true:autohint=true", */
-/*	"Hack Nerd Font Mono:pixelsize=11:antialias=true:autohint=true", */
+	"JoyPixels:pixelsize=12:antialias=true:autohint=true",
 };
 #endif // FONT2_PATCH
 
@@ -178,24 +178,24 @@ float alphaUnfocused = 0.6;
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 	/* 8 normal colors */
-	"black",
-	"red3",
-	"green3",
-	"yellow3",
-	"blue2",
-	"magenta3",
-	"cyan3",
-	"gray90",
+	"#070605",
+	"#801414",
+	"#36ab63",
+	"#a35834",
+	"#003d79",
+	"#b269ff",
+	"#0384ab",
+	"#f0cbbe",
 
 	/* 8 bright colors */
-	"gray50",
-	"red",
-	"green",
-	"yellow",
-	"#5c5cff",
-	"magenta",
-	"cyan",
-	"white",
+	"#402935",
+	"#b8174c",
+	"#73FA95",
+	"#E6B450",
+	"#367bf0",
+	"#f4b8f4",
+	"#00BCD4",
+	"#ffffff",	
 
 	[255] = 0,
 
@@ -203,7 +203,7 @@ static const char *colorname[] = {
 	"#add8e6", /* 256 -> cursor */
 	"#555555", /* 257 -> rev cursor*/
 	"#000000", /* 258 -> bg */
-	"#e5e5e5", /* 259 -> fg */
+	"#f0dfaf", /* 259 -> fg */
 };
 
 
