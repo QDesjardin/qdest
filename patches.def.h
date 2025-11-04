@@ -34,17 +34,17 @@
  * the window to be resized to any pixel size.
  * https://st.suckless.org/patches/anygeometry/
  */
-#define ANYGEOMETRY_PATCH 0
+#define ANYGEOMETRY_PATCH 1
 
 /* This patch allows st to resize to any pixel size rather than snapping to character width/height.
  * https://st.suckless.org/patches/anysize/
  */
-#define ANYSIZE_PATCH 0
+#define ANYSIZE_PATCH 1
 
 /* A simple variant of the anysize patch that only changes the resize hints to allow the window to
  * be resized to any size.
  */
-#define ANYSIZE_SIMPLE_PATCH 1
+#define ANYSIZE_SIMPLE_PATCH 0
 
 /* Draws a background image in farbfeld format in place of the defaultbg color allowing for pseudo
  * transparency.
@@ -64,7 +64,7 @@
  *    https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h4-Functions-using-CSI-_-ordered-by-the-final-character-lparen-s-rparen:CSI-Ps-SP-q.1D81
  * https://st.suckless.org/patches/blinking_cursor/
  */
-#define BLINKING_CURSOR_PATCH 0
+#define BLINKING_CURSOR_PATCH 1
 
 /* By default bold text is rendered with a bold font in the bright variant of the current color.
  * This patch makes bold text rendered simply as bold, leaving the color unaffected.
@@ -144,15 +144,31 @@
  */
 #define DISABLE_ROMAN_FONTS_PATCH 0
 
+/* Allows dragging a file into the terminal and have the path printed.
+ * https://st.suckless.org/patches/drag-n-drop
+ */
+#define DRAG_AND_DROP_PATCH 1
+
 /* This patch makes the cursor color the inverse of the current cell color.
  * https://st.suckless.org/patches/dynamic-cursor-color/
  */
 #define DYNAMIC_CURSOR_COLOR_PATCH 1
 
+/* This is a variant of the anysize patch that explicitly do not change the size increment hints,
+ * i.e. only keeping the dynamic padding which is the main thing the anysize patch introduces.
+ * In practice this means that the dynamic padding / anysize functionality only ever comes into
+ * effect when the size hints are intentionally ignored.
+ * An example of this would be dwm respecting the size hints of floating windows, but disrespecting
+ * the size hints when the window is tiled (provided that resizehints config is set to 0).
+ *
+ * Note that this patch depends on ANYSIZE_PATCH being enabled to have an effect.
+ */
+#define DYNAMIC_PADDING_PATCH 1
+
 /* Reading and writing st's screen through a pipe, e.g. pass info to dmenu.
  * https://st.suckless.org/patches/externalpipe/
  */
-#define EXTERNALPIPE_PATCH 0
+#define EXTERNALPIPE_PATCH 1
 
 /* This patch improves and extends the externalpipe patch in two ways:
  *    - it prevents the reset of the signal handler set on SIGCHILD, when
@@ -170,7 +186,7 @@
  * https://github.com/sos4nt/dynamic-colors
  * https://lists.suckless.org/hackers/2004/17218.html
  */
-#define EXTERNALPIPEIN_PATCH 0
+#define EXTERNALPIPEIN_PATCH 1
 
 /* This patch allows command line applications to use all the fancy key combinations
  * that are available to GUI applications.
@@ -184,7 +200,7 @@
  * So they will be used first for glyphs that are absent in the default font.
  * https://st.suckless.org/patches/font2/
  */
-#define FONT2_PATCH 0
+#define FONT2_PATCH 1
 
 /* This patch adds the ability to toggle st into fullscreen mode.
  * Two key bindings are defined: F11 which is typical with other applications and Alt+Enter
@@ -294,12 +310,17 @@
  */
 #define OPENCOPIED_PATCH 0
 
+/* Open the selected text using xdg-open.
+ * https://st.suckless.org/patches/open_selected_text/
+ */
+#define OPEN_SELECTED_TEXT_PATCH 0
+
 /* This patch allows for URLs to be opened directly when you click on them. This may not work with
  * all terminal applications.
  *
  * https://www.reddit.com/r/suckless/comments/cc83om/st_open_url/
  */
-#define OPENURLONCLICK_PATCH 0
+#define OPENURLONCLICK_PATCH 1
 
 /* This patch allows st to fetch the current working directory through the OSC 7 escape
  * sequence emitted by shells. Must be used with newterm patch.
@@ -350,7 +371,7 @@
  * This variant depends on SCROLLBACK_PATCH being enabled.
  * https://st.suckless.org/patches/scrollback/
  */
-#define SCROLLBACK_MOUSE_ALTSCREEN_PATCH 0
+#define SCROLLBACK_MOUSE_ALTSCREEN_PATCH 1
 
 /* This patch adds the two color-settings selectionfg and selectionbg to config.def.h.
  * Those define the fore- and background colors which are used when text on the screen is selected
@@ -358,6 +379,12 @@
  * https://st.suckless.org/patches/selectioncolors/
  */
 #define SELECTION_COLORS_PATCH 0
+
+/* This patch works with selectioncolors and alpha patches to make selection
+ * background color transparent.
+ * https://st.suckless.org/patches/selectionbg-alpha/
+ */
+#define SELECTIONBG_ALPHA_PATCH 0
 
 /* This is the single drawable buffer patch as outlined in the FAQ to get images
  * in w3m to display. While this patch does not break the alpha patch it images
@@ -378,7 +405,7 @@
  *
  * https://gist.github.com/saitoha/70e0fdf22e3e8f63ce937c7f7da71809
  */
-#define SIXEL_PATCH 0
+#define SIXEL_PATCH 1
 
 /* This patch allows clients to embed into the st window and is useful if you tend to
  * start X applications from the terminal. For example:
@@ -388,7 +415,7 @@
  * The behavior is similar to Plan 9 where applications can take over windows.
  * URL TBC
  */
-#define ST_EMBEDDER_PATCH 0
+#define ST_EMBEDDER_PATCH 1
 
 /* Use inverted defaultbg/fg for selection when bg/fg are the same.
  * https://st.suckless.org/patches/spoiler/
@@ -473,14 +500,14 @@
 /* Adds support for w3m images.
  * https://st.suckless.org/patches/w3m/
  */
-#define W3M_PATCH 1
+#define W3M_PATCH 0
 
 /* Adds proper glyphs rendering in st allowing wide glyphs to be drawn as-is as opposed to
  * smaller or cut glyphs being rendered.
  * https://github.com/Dreomite/st/commit/e3b821dcb3511d60341dec35ee05a4a0abfef7f2
  * https://www.reddit.com/r/suckless/comments/jt90ai/update_support_for_proper_glyph_rendering_in_st/
  */
-#define WIDE_GLYPHS_PATCH 1
+#define WIDE_GLYPHS_PATCH 0
 
 /* There is a known issue that Google's Variable Fonts (VF) can end up with letter spacing
  * that is too wide in programs that use Xft, for example Inconsolata v3.000.

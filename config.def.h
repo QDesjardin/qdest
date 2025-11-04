@@ -10,6 +10,7 @@ static char *font = "dina:pixelsize=12:antialias=true:autohint=true";
 /* Spare fonts */
 static char *font2[] = {
 /*	"Inconsolata for Powerline:pixelsize=12:antialias=true:autohint=true", */
+/*	"Hack Nerd Font Mono:pixelsize=11:antialias=true:autohint=true", */
 	"JoyPixels:pixelsize=12:antialias=true:autohint=true",
 };
 #endif // FONT2_PATCH
@@ -175,27 +176,36 @@ float alphaUnfocused = 0.6;
 #endif // ALPHA_FOCUS_HIGHLIGHT_PATCH
 #endif // ALPHA_PATCH
 
+#if DRAG_AND_DROP_PATCH
+/*
+ * drag and drop escape characters
+ *
+ * this will add a '\' before any characters specified in the string.
+ */
+char *xdndescchar = " !\"#$&'()*;<>?[\\]^`{|}~";
+#endif // DRAG_AND_DROP_PATCH
+
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 	/* 8 normal colors */
 	"#070605",
-	"#801414",
-	"#36ab63",
-	"#a35834",
-	"#003d79",
-	"#b269ff",
-	"#0384ab",
-	"#f0cbbe",
+  "#801414",
+  "#36ab63",
+  "#a35834",
+  "#003d79",
+  "#b269ff",
+  "#0384ab",
+  "#f0cbbe",
 
 	/* 8 bright colors */
 	"#402935",
-	"#b8174c",
-	"#73FA95",
-	"#E6B450",
-	"#367bf0",
-	"#f4b8f4",
-	"#00BCD4",
-	"#ffffff",	
+  "#b8174c",
+  "#73FA95",
+  "#E6B450",
+  "#367bf0",
+  "#f4b8f4",
+  "#00BCD4",
+  "#ffffff",
 
 	[255] = 0,
 
@@ -362,6 +372,9 @@ static uint forcemousemod = ShiftMask;
  */
 static MouseShortcut mshortcuts[] = {
 	/* mask                 button   function        argument       release  screen */
+	#if OPEN_SELECTED_TEXT_PATCH
+	{ ControlMask,          Button2, selopen,        {.i = 0},      1 },
+	#endif // OPEN_SELECTED_TEXT_PATCH
 	#if CLIPBOARD_PATCH
 	{ XK_ANY_MOD,           Button2, clippaste,      {.i = 0},      1 },
 	#else
@@ -427,10 +440,10 @@ static Shortcut shortcuts[] = {
 	{ XK_NO_MOD,            XK_F11,         fullscreen,      {.i =  0} },
 	{ MODKEY,               XK_Return,      fullscreen,      {.i =  0} },
 	#endif // FULLSCREEN_PATCH
-	#if SCROLLBACK_PATCH
+	#if SCROLLBACK_PATCH || REFLOW_PATCH
 	{ ShiftMask,            XK_Page_Up,     kscrollup,       {.i = -1}, S_PRI },
 	{ ShiftMask,            XK_Page_Down,   kscrolldown,     {.i = -1}, S_PRI },
-	#endif // SCROLLBACK_PATCH
+	#endif // SCROLLBACK_PATCH || REFLOW_PATCH
 	#if CLIPBOARD_PATCH
 	{ TERMMOD,              XK_Y,           clippaste,       {.i =  0} },
 	{ ShiftMask,            XK_Insert,      clippaste,       {.i =  0} },
