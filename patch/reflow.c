@@ -806,12 +806,25 @@ selsnap(int *x, int *y, int direction)
 		}
 		break;
 	case SNAP_LINE:
+		#if LINE_SNAP_DELIMITER_PATCH
+		for (;;) {
+			newx = *x + direction;
+			if (!BETWEEN(newx, 0, term.col - 1))
+				break;
+			gp = &TLINE(*y)[newx];
+			if (IS_SNAP_LINE_DELIM(gp->u))
+				break;
+			*x = newx;
+		}
+		#endif // LINE_SNAP_DELIMITER_PATCH
 		/*
 		 * Snap around if the the previous line or the current one
 		 * has set ATTR_WRAP at its end. Then the whole next or
 		 * previous line will be selected.
 		 */
+		#if !LINE_SNAP_DELIMITER_PATCH
 		*x = (direction < 0) ? 0 : term.col - 1;
+		#endif // LINE_SNAP_DELIMITER_PATCH
 		if (direction < 0) {
 			for (; *y > rtop; *y -= 1) {
 				if (!tiswrapped(TLINE(*y-1)))

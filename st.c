@@ -57,6 +57,9 @@
 #define ISCONTROLC1(c)  (BETWEEN(c, 0x80, 0x9f))
 #define ISCONTROL(c)    (ISCONTROLC0(c) || ISCONTROLC1(c))
 #define ISDELIM(u)      (u && wcschr(worddelimiters, u))
+#if LINE_SNAP_DELIMITER_PATCH
+#define IS_SNAP_LINE_DELIM(u) (u && wcschr(snap_line_delimiters, u))
+#endif // LINE_SNAP_DELIMITER_PATCH
 
 enum term_mode {
 	MODE_WRAP         = 1 << 0,
@@ -2729,10 +2732,10 @@ strhandle(void)
 				fprintf(stderr, "erresc: invalid color j=%d, p=%s\n",
 				        j, p ? p : "(null)");
 			} else {
-				/*
-				 * TODO if defaultbg color is changed, borders
-				 * are dirty
-				 */
+				#if XCLEARWIN_PATCH
+				if (j == (int)defaultbg)
+					xclearwin();
+				#endif // XCLEARWIN_PATCH
 				tfulldirt();
 			}
 			return;

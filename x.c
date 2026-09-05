@@ -672,9 +672,32 @@ selnotify(XEvent *e)
 			 */
 			repl = data;
 			last = data + nitems * format / 8;
+			#if PASTE_CONTROLS_PATCH
+			while (repl != last) {
+				if (*repl <= 0x1f) {
+					switch (*repl) {
+					case 0x09: /* HT */
+					case 0x0D: /* CR */
+						repl++;
+						break;
+					case 0x0a: /* LF */
+						*repl++ = '\r';
+						break;
+					default:
+						*repl++ = ' ';
+						break;
+					}
+				} else if (*repl == 0x7f) {
+					*repl++ = ' ';
+				} else {
+					repl++;
+				}
+			}
+			#else
 			while ((repl = memchr(repl, '\n', last - repl))) {
 				*repl++ = '\r';
 			}
+			#endif // PASTE_CONTROLS_PATCH
 
 			if (IS_SET(MODE_BRCKTPASTE) && ofs == 0)
 				ttywrite("\033[200~", 6, 0);
@@ -692,9 +715,32 @@ selnotify(XEvent *e)
 		 */
 		repl = data;
 		last = data + nitems * format / 8;
+		#if PASTE_CONTROLS_PATCH
+		while (repl != last) {
+			if (*repl <= 0x1f) {
+				switch (*repl) {
+				case 0x09: /* HT */
+				case 0x0D: /* CR */
+					repl++;
+					break;
+				case 0x0a: /* LF */
+					*repl++ = '\r';
+					break;
+				default:
+					*repl++ = ' ';
+					break;
+				}
+			} else if (*repl == 0x7f) {
+				*repl++ = ' ';
+			} else {
+				repl++;
+			}
+		}
+		#else
 		while ((repl = memchr(repl, '\n', last - repl))) {
 			*repl++ = '\r';
 		}
+		#endif // PASTE_CONTROLS_PATCH
 
 		if (IS_SET(MODE_BRCKTPASTE) && ofs == 0)
 			ttywrite("\033[200~", 6, 0);
@@ -1305,7 +1351,9 @@ xloadfont(Font *f, FcPattern *pattern)
 	    XftResultMatch)) {
 		if ((XftPatternGetInteger(f->match->pattern, "weight", 0,
 		    &haveattr) != XftResultMatch) || haveattr != wantattr) {
+			#if !NOBADWEIGHT_PATCH
 			f->badweight = 1;
+			#endif // NOBADWEIGHT_PATCH
 			fputs("font weight does not match\n", stderr);
 		}
 	}

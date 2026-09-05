@@ -5,13 +5,13 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "BmPlus IBM VGA 8x16:pixelsize=14:antialias=true:autohint=true";
+static char *font = "BmPlus IBM VGA 8x16:pixelsize=16:antialias=false:autohint=false";
 #if FONT2_PATCH
 /* Spare fonts */
 static char *font2[] = {
 /*	"Inconsolata for Powerline:pixelsize=12:antialias=true:autohint=true", */
 /*	"Hack Nerd Font Mono:pixelsize=11:antialias=true:autohint=true", */
-	"JoyPixels:pixelsize=12:antialias=true:autohint=true",
+	"JoyPixels:pixelsize=16:antialias=true:autohint=true",
 };
 #endif // FONT2_PATCH
 
@@ -73,6 +73,9 @@ static float chscale = 1.0;
  * More advanced example: L" `'\"()[]{}"
  */
 wchar_t *worddelimiters = L" ";
+#if LINE_SNAP_DELIMITER_PATCH
+wchar_t *snap_line_delimiters = L"│┃";
+#endif // LINE_SNAP_DELIMITER_PATCH
 
 #if KEYBOARDSELECT_PATCH && REFLOW_PATCH
 /* Word delimiters for short and long jumps in the keyboard select patch */
@@ -210,10 +213,10 @@ static const char *colorname[] = {
 	[255] = 0,
 
 	/* more colors can be added after 255 to use with DefaultXX */
-	"#add8e6", /* 256 -> cursor */
-	"#555555", /* 257 -> rev cursor*/
-	"#000000", /* 258 -> bg */
-	"#f0dfaf", /* 259 -> fg */
+	"#cd7f32", /* 256 -> cursor */
+	"#634053", /* 257 -> rev cursor*/
+	"#070605", /* 258 -> bg */
+	"#f8e0d4", /* 259 -> fg */
 };
 
 
@@ -438,7 +441,6 @@ static Shortcut shortcuts[] = {
 	#endif // ALPHA_PATCH
 	#if FULLSCREEN_PATCH
 	{ XK_NO_MOD,            XK_F11,         fullscreen,      {.i =  0} },
-	{ MODKEY,               XK_Return,      fullscreen,      {.i =  0} },
 	#endif // FULLSCREEN_PATCH
 	#if SCROLLBACK_PATCH || REFLOW_PATCH
 	{ ShiftMask,            XK_Page_Up,     kscrollup,       {.i = -1}, S_PRI },
