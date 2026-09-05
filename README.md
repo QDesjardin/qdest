@@ -2,7 +2,7 @@
 
 Queen Dairy's st, forked from [bakkeby/st-flexipatch](https://github.com/bakkeby/st-flexipatch). Dairy 16-colour palette, native 16px BmPlus IBM VGA (no antialias), and extra patches from st.suckless.org that flexipatch does not ship.
 
-Pairs with **[qdwm](https://github.com/QDesjardin/qdwm)**.
+More of the same world: [queendairy.com](https://queendairy.com/) · [projects](https://queendairy.com/projects/) · [Dairy colour](https://queendairy.com/projects/dairy_colour/) · companion wm **[qdwm](https://github.com/QDesjardin/qdwm)**.
 
 ![qdwm and qdest](preview.png)
 
