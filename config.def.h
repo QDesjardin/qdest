@@ -275,10 +275,11 @@ static unsigned int cursorshape = 2;
 
 /*
  * Default columns and rows numbers
+ * (used when the window is floating; tiled size is set by the WM)
  */
 
 static unsigned int cols = 80;
-static unsigned int rows = 24;
+static unsigned int rows = 25;
 
 #if ANYGEOMETRY_PATCH
 /*
