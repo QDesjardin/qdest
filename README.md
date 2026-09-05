@@ -1,3 +1,41 @@
+# qdest
+
+Queen Dairy's st, forked from [bakkeby/st-flexipatch](https://github.com/bakkeby/st-flexipatch). Dairy 16-colour palette, native 16px BmPlus IBM VGA (no antialias), and extra patches from st.suckless.org that flexipatch does not ship.
+
+Pairs with **[qdwm](https://github.com/QDesjardin/qdwm)**.
+
+![qdwm and qdest](preview.png)
+
+The preview is a lossless PNG (`maim -s`) so the Dairy palette is not re-encoded.
+
+This build was put together with [Grok Build](https://grok.x.ai/) — it saved the day on font rendering, patch integration, and the colour work.
+
+## Companion programs
+
+qdwm screenshots (Print / Ctrl+Print) use **maim** and **dunst**, and write into `~/screenies/`. The terminal itself does not take those shots; dwm does.
+
+Fonts: **BmPlus IBM VGA 8x16** at 16px, **JoyPixels** for emoji.
+
+`make && sudo make install`. New `st` windows pick up the binary; already-open terminals stay on the old one.
+
+## Keybinds (inside st)
+
+Mod is **Alt**. Termmod is **Ctrl+Shift**.
+
+| Keys | Action |
+|---|---|
+| Ctrl+Shift+C / V | copy / paste |
+| Ctrl+Shift+Return | new terminal in the same cwd |
+| F11 | fullscreen |
+| Alt+L | copy last URL |
+| Shift+PgUp / PgDn | scrollback |
+| Ctrl+Shift+PgUp / PgDn | zoom |
+| Ctrl+PgUp / PgDn | jump to previous / next prompt (OSC 133) |
+
+Paste strips most C0 controls. Triple-click line-select stops at box-drawing delimiters (`│┃`).
+
+---
+
 Similar to [dwm-flexipatch](https://github.com/bakkeby/dwm-flexipatch) this st 0.9.3 (04ce0d6, 2026-06-29) project has a different take on st patching. It uses preprocessor directives to decide whether or not to include a patch during build time. Essentially this means that this build, for better or worse, contains both the patched _and_ the original code. The aim being that you can select which patches to include and the build will contain that code and nothing more.
 
 For example to include the `alpha` patch then you would only need to flip this setting from 0 to 1 in [patches.h](https://github.com/bakkeby/st-flexipatch/blob/master/patches.def.h):
